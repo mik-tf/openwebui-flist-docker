@@ -1,4 +1,0 @@
-exec: /scripts/openwebui.sh
-oneshot: true
-after:
-  - dockerd
