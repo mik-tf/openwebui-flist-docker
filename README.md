@@ -14,19 +14,17 @@
 
 ## Introduction
 
-This project provides a self-contained deployment of **OpenWebUI** and **Ollama** on the ThreeFold Grid, using a micro VM. The deployment is managed via **zinit** for automatic service management and includes:
+This project provides a self-contained deployment of **OpenWebUI** on the ThreeFold Grid, using a micro VM. The deployment is managed via **zinit** for automatic service management and includes:
 
-- Preconfigured firewall rules with **UFW**
+- Docker daemon for container management
 - Secure SSH server configuration
-- **Ollama** for local LLM serving
 - **OpenWebUI** for a web-based interface
 - Self-healing services via **zinit**
 
 The deployment automatically provisions:
 - Secure SSH access
 - OpenWebUI on port `8080`
-- Ollama on port `11434`
-- Persistent storage for Ollama models and WebUI data
+- Persistent storage for WebUI data
 
 ***
 
@@ -34,25 +32,22 @@ The deployment automatically provisions:
 
 ```
 .
+├── all_files_text.txt
 ├── Dockerfile
 ├── README.md
 ├── scripts
-│   ├── ollama.sh
 │   ├── openwebui.sh
-│   ├── sshd_init.sh
-│   └── ufw_init.sh
+│   └── sshd_init.sh
 └── zinit
-    ├── ollama.yaml
+    ├── dockerd.yaml
     ├── openwebui.yaml
     ├── sshd.yaml
-    ├── ssh-init.yaml
-    ├── ufw-init.yaml
-    └── ufw.yaml
+    └── ssh-init.yaml
 ```
 
-- **`scripts/`**: Contains initialization and service scripts.
-- **`zinit/`**: Contains **zinit** service configurations for managing services.
-- **`Dockerfile`**: Defines the Docker image with all dependencies and configurations.
+- **`scripts/`**: Contains initialization and service scripts
+- **`zinit/`**: Contains **zinit** service configurations for managing services
+- **`Dockerfile`**: Defines the Docker image with all dependencies and configurations
 
 ***
 
@@ -66,34 +61,28 @@ To create the Docker image:
    cd openwebui-flist
    ```
 
-2. Pull and compressor the Ollama image
-   ```
-   docker pull ghcr.io/open-webui/open-webui:ollama
-   docker save ghcr.io/open-webui/open-webui:ollama > open-webui.tar
+2. Build the Docker image:
+   ```bash
+   docker build -t <your-dockerhub-username>/openwebui-tfgrid .
    ```
 
-3. Build the Docker image:
+3. Push to Docker Hub:
    ```bash
-   docker build -t <your-dockerhub-username>/openwebui-ollama-tfgrid .
-   ```
-
-4. Push to Docker Hub:
-   ```bash
-   docker push <your-dockerhub-username>/openwebui-ollama-tfgrid
+   docker push <your-dockerhub-username>/openwebui-tfgrid
    ```
 
 ***
 
 ## Convert the Docker Image to Zero-OS FList
 
-1. Use the [TF Hub Docker Converter](https://hub.grid.tf/docker-convert).
+1. Use the [TF Hub Docker Converter](https://hub.grid.tf/docker-convert)
 2. Enter your Docker image name:
    ```text
-   <your-dockerhub-username>/openwebui-ollama-tfgrid:latest
+   <your-dockerhub-username>/openwebui-tfgrid:latest
    ```
 3. Convert and get your FList URL (example):
    ```text
-   https://hub.grid.tf/<your-3bot>/openwebui-ollama-tfgrid-latest.flist
+   https://hub.grid.tf/<your-3bot>/openwebui-tfgrid-latest.flist
    ```
 
 ***
@@ -102,23 +91,24 @@ To create the Docker image:
 
 ### Playground Steps
 
-1. Go to [ThreeFold Playground](https://play.grid.tf).
+1. Go to [ThreeFold Playground](https://play.grid.tf)
 2. Create a Micro VM:
-   - **VM Image**: Paste your FList URL.
-   - **Entry Point**: `/sbin/zinit init` (default).
-   - **Resources**: Minimum 2 vCPU, 4GB RAM, 10GB disk.
-3. Deploy.
-4. Set a gateway domain with port 8080 and access OpenWeb UI with it
+   - **VM Image**: Paste your FList URL
+   - **Entry Point**: `/sbin/zinit init` (default)
+   - **Resources**: Minimum 2 vCPU, 4GB RAM, 10GB disk
+   - **Mount**: Add a mount point at `/mnt/data`
+3. Deploy
+4. Set a gateway domain with port 8080 to access OpenWebUI
 
 ***
 
 ## Conclusion
 
-This FList provides a self-contained deployment of **OpenWebUI** and **Ollama** on the ThreeFold Grid with:
+This FList provides a self-contained deployment of **OpenWebUI** on the ThreeFold Grid with:
 - Automatic service management via **zinit**
-- Secure firewall configuration with **UFW**
+- Docker container management
 - SSH access for maintenance
-- Persistent storage for models and data
+- Persistent storage for data
 - Easy deployment via Docker and TF Grid
 
-Deploy and enjoy a fully functional OpenWebUI and Ollama setup on the decentralized ThreeFold Grid!
+Deploy and enjoy a fully functional OpenWebUI setup on the decentralized ThreeFold Grid!
