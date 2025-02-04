@@ -57,8 +57,8 @@ To create the Docker image:
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/mik-tf/openwebui-flist
-   cd openwebui-flist
+   git clone https://github.com/mik-tf/openwebui-flist-docker
+   cd openwebui-flist-docker
    ```
 
 2. Build the Docker image:
@@ -91,7 +91,7 @@ To create the Docker image:
 
 ### Playground Steps
 
-1. Go to [ThreeFold Playground](https://play.grid.tf)
+1. Go to [ThreeFold Dashboard](https://dashboard.grid.tf)
 2. Create a Micro VM:
    - **VM Image**: Paste your FList URL
    - **Entry Point**: `/sbin/zinit init` (default)
