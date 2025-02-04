@@ -61,7 +61,13 @@ To create the Docker image:
    cd openwebui-flist-docker
    ```
 
-2. Build the Docker image:
+2. Pull and compressor the Ollama image
+   ```
+   docker pull ghcr.io/open-webui/open-webui:ollama
+   docker save ghcr.io/open-webui/open-webui:ollama | gzip > open-webui.tar.gz
+   ```
+
+3. Build the Docker image:
    ```bash
    docker build -t <your-dockerhub-username>/openwebui-tfgrid .
    ```

@@ -11,6 +11,10 @@ RUN curl -fsSL https://get.docker.com -o /usr/local/bin/install-docker.sh && \
 
 RUN sh /usr/local/bin/install-docker.sh
 
+COPY open-webui.tar.gz /
+RUN mkdir -p /mnt/data/docker/images && \
+    mv /open-webui.tar.gz /mnt/data/docker/images/
+
 COPY ./scripts/ /scripts/
 COPY ./zinit/ /etc/zinit/
 RUN chmod +x /scripts/*.sh
