@@ -15,3 +15,8 @@ docker run \
   --name open-webui \
   --restart always \
   ghcr.io/open-webui/open-webui:ollama
+
+# Start WatchTower container
+docker run -d --name watchtower \
+  --volume /var/run/docker.sock:/var/run/docker.sock \
+  containrrr/watchtower -i 300 open-webui

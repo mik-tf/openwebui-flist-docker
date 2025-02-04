@@ -18,13 +18,14 @@ This project provides a self-contained deployment of **OpenWebUI** on the ThreeF
 
 - Docker daemon for container management
 - Secure SSH server configuration
-- **OpenWebUI** for a web-based interface
+- **OpenWebUI** with Ollama integration
+- Automatic container updates via Watchtower
 - Self-healing services via **zinit**
 
 The deployment automatically provisions:
 - Secure SSH access
 - OpenWebUI on port `8080`
-- Persistent storage for WebUI data
+- Persistent storage for Docker and WebUI data
 
 ***
 
@@ -36,11 +37,11 @@ The deployment automatically provisions:
 ├── Dockerfile
 ├── README.md
 ├── scripts
-│   ├── openwebui.sh
+│   ├── start_containers.sh
 │   └── sshd_init.sh
 └── zinit
     ├── dockerd.yaml
-    ├── openwebui.yaml
+    ├── start_containers.yaml
     ├── sshd.yaml
     └── ssh-init.yaml
 ```
@@ -104,9 +105,10 @@ To create the Docker image:
 
 ## Conclusion
 
-This FList provides a self-contained deployment of **OpenWebUI** on the ThreeFold Grid with:
+This FList provides a self-contained deployment of **OpenWebUI** with Ollama on the ThreeFold Grid with:
 - Automatic service management via **zinit**
 - Docker container management
+- Automatic container updates via Watchtower
 - SSH access for maintenance
 - Persistent storage for data
 - Easy deployment via Docker and TF Grid
